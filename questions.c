@@ -106,13 +106,25 @@ void display_question(char *category, int value)
 // Returns true if the answer is correct for the question for that category and dollar value
 bool valid_answer(char *category, int value, char *answer)
 {
-    // Look into string comparison functions
+    for (int i = 0; i < NUM_QUESTIONS; i++) {
+        if (strcmp(questions[i].category, category) == 0 && questions[i].value == value && !questions[i].answered) {
+            if (strcasecmp(questions[i].answer, answer) == 0) {
+                questions[i].answered = true;
+                return true;
+            }
+            return false;
+        }
+    }
     return false;
 }
 
 // Returns true if the question has already been answered
 bool already_answered(char *category, int value)
 {
-    // lookup the question and see if it's already been marked as answered
+    for (int i = 0; i < NUM_QUESTIONS; i++) {
+        if (strcmp(questions[i].category, category) == 0 && questions[i].value == value) {
+            return questions[i].answered;
+        }
+    }
     return false;
 }
